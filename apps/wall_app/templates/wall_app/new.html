@@ -1,0 +1,17 @@
+{% extends 'bjj_app/base.html' %}
+{% block title %}
+    New Post
+{% endblock %}
+{% block content %}
+{% load static %}
+<main class="container p-5">
+    <form action="{% url 'wall:create' %}" method="POST">
+      {% csrf_token %}
+        <div class="form-group">
+            <p class="lead">Write a Post</p>
+            <textarea class="form-control" name="post" rows="3" minlength="1" maxlength="140" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post a Message</button>
+    </form>
+</main>
+{% endblock %}

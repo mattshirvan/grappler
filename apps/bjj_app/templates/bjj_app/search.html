@@ -1,0 +1,26 @@
+{% extends "bjj_app/base.html" %}
+{% load static %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<p>Find all moves whose name starts with 
+    <form id='myForm' method='POST' action="{% url 'bjj:new_search' %}">
+    {% csrf_token %}
+    <input type='text' id='starts_with' name='starts_with' value=''>
+    </form>
+</p>
+<div id='placeholder'></div>
+<script>
+   $('#starts_with').keyup(function() {
+      console.log('sending the following information', $('#myForm').serialize());
+      $.ajax({
+         method: "POST",
+         url: "/bjj/new_search",
+         data: $('#myForm').serialize(),
+         success: function(response) {
+             console.log('received response:', response);
+             $('#placeholder').html(response)
+         }
+      })
+   });
+</script>
+{% endblock %}

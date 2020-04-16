@@ -1,0 +1,30 @@
+{% extends "bjj_app/base.html" %}
+{% load static %}
+{% block title %}History{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Userame</th>        
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in users%}
+          <tr>
+            <th scope="row">{{user.name}}</th>
+            <td>{{user.username}}</td>
+            <td>{{move.creator}}</td>
+            {% if request.session.id != user.id %}
+                <td>               
+                    <form style="display: inline-block;" action="{% url 'wall:new_follow' user.id %}" method="POST">
+                        <input type="hidden" name="user_id" value="{{user.id}}">
+                        <input class="btn btn-danger" type="submit" value="Follow">
+                    </form></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

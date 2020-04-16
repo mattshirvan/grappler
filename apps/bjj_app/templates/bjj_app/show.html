@@ -1,0 +1,29 @@
+{% extends "bjj_app/base.html" %}
+{% load static %}
+{% block title %}History{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Creator</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for move in moves %}
+          <tr>
+            <th scope="row">{{move.id}}</th>
+            <td>{{move.name}}</td>
+            <td>{{move.creator}}</td>
+            <td> <a href="{% url 'bjj:update' move.id %}"><input class="btn btn-primary" type="button" value="Edit"></a> |                
+                <form style="display: inline-block;" action="{% url 'bjj:destroy' move.id %}" method="POST">
+                    <input type="hidden" name="move_id" value="{{move.id}}">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form></td>
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

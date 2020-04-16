@@ -1,0 +1,18 @@
+{% extends 'bjj_app/base.html' %}
+{% block title %}
+    Edit Post
+{% endblock %}
+{% block content %}
+{% load static %}
+<main class="container p-5">
+    <form action="{% url 'wall:update' %}" method="POST">
+      {% csrf_token %}
+        <div class="form-group">
+            <p class="lead">Edit Post</p>
+            <textarea class="form-control" name="post" rows="3" minlength="1" maxlength="140" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    <a href="{% url 'wall:index' %}"><input type="button" class="btn btn-info" value="Cancel"></a>
+</main>
+{% endblock %}

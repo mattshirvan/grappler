@@ -1,0 +1,37 @@
+{% extends 'bjj_app/base.html' %}
+{% block title %}
+    Wall
+{% endblock %}
+{% block content %}
+{% load static %}
+<main>
+  <header>
+      <h3>
+          <span class="blue">Y</span><span class="red">o</span><span class="yellow">u</span><span class="green">r</span> <span class="red">F</span><span class="blue">e</span><span class="red">e</span><span class="yellow">d</span>
+      </h3>
+  </header>
+  <hr>
+  <section>
+      {% for post in posts %} 
+      <div style="display: block;" class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"> <span class="green">{{post.user.name }}</span> says:</h5>
+            <p class="card-text">{{post.message}}</p>  
+            {% if post.user.id != request.session.id %}                  
+              <form style="display: inline-block;" action="{% url 'wall:new_like' post.id %}" method="POST">
+                  <input type="hidden" name="post_id" value="{{post.id}}">
+                  <input class="btn" type="submit" value="Like">
+              </form> 
+            {% elif post.user.id == request.session.id %}
+              <a href="{% url 'wall:edit' post.id %}"><input class="btn" type="button" value="Edit"></a> |                
+              <form style="display: inline-block;" action="{% url 'wall:destroy' post.id %}" method="POST">
+                  <input type="hidden" name="post_id" value="{{post.id}}">
+                  <input class="btn" type="submit" value="Delete">
+              </form>
+            {% endif %}
+          </div>
+      </div>
+      {% endfor %}
+  </section>
+      </main>
+{% endblock %}
